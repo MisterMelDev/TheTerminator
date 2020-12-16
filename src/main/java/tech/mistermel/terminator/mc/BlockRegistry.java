@@ -35,7 +35,7 @@ public class BlockRegistry {
 			return;
 		
 		int[] blockCoords = this.toChunkBlockCoords(loc);
-		chunk.set(loc.getBlockX(), blockCoords[0], blockCoords[1], blockCoords[2]);
+		chunk.set(blockCoords[0], blockCoords[1], blockCoords[2], record.getBlock());
 	}
 	
 	public String getBlock(Location loc) {
