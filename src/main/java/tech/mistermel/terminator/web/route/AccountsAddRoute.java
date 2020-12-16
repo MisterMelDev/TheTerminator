@@ -1,10 +1,9 @@
 package tech.mistermel.terminator.web.route;
 
-import java.util.UUID;
-
+import com.github.steveice10.mc.auth.data.GameProfile;
 import com.github.steveice10.mc.auth.exception.request.InvalidCredentialsException;
 import com.github.steveice10.mc.auth.exception.request.RequestException;
-import com.github.steveice10.mc.protocol.MinecraftProtocol;
+import com.github.steveice10.mc.auth.service.AuthenticationService;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
@@ -24,18 +23,18 @@ public class AccountsAddRoute implements Route {
 		}
 		
 		try {
-			MinecraftProtocol protocol = new MinecraftProtocol(loginUsername, password);
-			String clientToken = protocol.getClientToken();
-			String accessToken = protocol.getAccessToken();
+			AuthenticationService authService = new AuthenticationService();
+			authService.setUsername(loginUsername);
+			authService.setPassword(password);
+			authService.login();
 			
-			String username = protocol.getProfile().getName();
-			UUID uuid = protocol.getProfile().getId();
+			GameProfile profile = authService.getSelectedProfile();
 			
-			if(Launcher.instance.getAccount(uuid) != null) {
+			if(Launcher.instance.getAccount(profile.getId()) != null) {
 				return NanoHTTPD.newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain", "An account with this UUID already exists");
 			}
 			
-			Account account = new Account(username, uuid, loginUsername, clientToken, accessToken);
+			Account account = new Account(profile.getName(), profile.getId(), loginUsername, authService.getClientToken(), authService.getAccessToken());
 			Launcher.instance.addAccount(account);
 			
 			return NanoHTTPD.newFixedLengthResponse("OK");
