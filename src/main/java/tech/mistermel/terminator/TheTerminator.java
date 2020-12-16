@@ -99,6 +99,11 @@ public class TheTerminator {
 			return;
 		}
 		
+		if(players.get(account) != null) {
+			logger.warn("Could not connect account, already connected");
+			return;
+		}
+		
 		BotPlayer player = new BotPlayer(account);
 		players.put(account, player);
 		player.connect(ip, port);
