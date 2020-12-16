@@ -3,7 +3,9 @@ package tech.mistermel.terminator.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +20,18 @@ public class WebServer extends NanoWSD {
 
 	private static final int PORT = 8080;
 	private static final String INDEX_FILE = "/index.html";
+	private static final byte[] PING_PAYLOAD = "1889BEJANDJKM859".getBytes();
 	
 	private Map<String, Route> routes = new HashMap<>();
+	private Set<SocketClient> socketClients = new HashSet<>();
 	
 	public WebServer() {
 		super(PORT);
 		
 		try {
 			this.start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
+			new PingThread().start();
+			
 			logger.info("Web server started on port {}", PORT);
 		} catch (IOException e) {
 			logger.error("Error occurred while attempting to start web server", e);
@@ -62,8 +68,38 @@ public class WebServer extends NanoWSD {
 		}
 	}
 	
+	private final class PingThread extends Thread {
+		
+		@Override
+		public void run() {
+			while(true) {
+				for(SocketClient socketClient : socketClients) {
+					try {
+						socketClient.ping(PING_PAYLOAD);
+					} catch (IOException e) {
+						logger.error("Error occurred while attempting to send ping", e);
+					}
+				}
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					logger.warn("Thread sleep in PingThread was interrupted");
+					break;
+				}
+			}
+		}
+		
+	}
+	
 	@Override
 	protected WebSocket openWebSocket(IHTTPSession handshake) {
-		return null;
+		SocketClient socketClient = new SocketClient(handshake);
+		socketClients.add(socketClient);
+		return socketClient;
+	}
+	
+	public void removeWebSocket(SocketClient socketClient) {
+		socketClients.remove(socketClient);
 	}
 }
