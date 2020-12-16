@@ -1,8 +1,9 @@
-package tech.mistermel.terminator.web;
+package tech.mistermel.terminator.web.route;
 
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.IHTTPSession;
@@ -18,7 +19,11 @@ public class AccountsListRoute implements Route {
 		
 		JSONArray accountsArray = new JSONArray();
 		for(Account account : accounts) {
-			accountsArray.put(account.getUsername());
+			JSONObject json = new JSONObject();
+			accountsArray.put(json);
+			
+			json.put("username", account.getUsername());
+			json.put("uuid", account.getUuid().toString());
 		}
 		
 		return NanoHTTPD.newFixedLengthResponse(accountsArray.toString());

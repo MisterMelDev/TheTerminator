@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoWSD;
+import tech.mistermel.terminator.web.route.Route;
 
 public class WebServer extends NanoWSD {
 

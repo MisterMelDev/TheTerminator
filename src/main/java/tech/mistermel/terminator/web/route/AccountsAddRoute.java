@@ -1,4 +1,4 @@
-package tech.mistermel.terminator.web;
+package tech.mistermel.terminator.web.route;
 
 import java.util.UUID;
 
