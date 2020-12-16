@@ -28,7 +28,7 @@ public class SocketClient extends WebSocket {
 	@Override
 	protected void onClose(CloseCode code, String reason, boolean initiatedByRemote) {
 		Launcher.instance.getWebServer().removeWebSocket(this);
-		logger.info("Connection closed: {}", code);
+		logger.info("Connection closed (code: {}, reason: {}, initiatedByRemote: {})", code, reason, initiatedByRemote);
 	}
 
 	@Override

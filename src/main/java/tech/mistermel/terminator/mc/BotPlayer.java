@@ -6,8 +6,12 @@ import org.slf4j.LoggerFactory;
 import com.github.steveice10.mc.auth.data.GameProfile;
 import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.mc.protocol.data.game.ClientRequest;
+import com.github.steveice10.mc.protocol.data.game.world.block.BlockChangeRecord;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientRequestPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.ServerPlayerHealthPacket;
+import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerBlockChangePacket;
+import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerChunkDataPacket;
+import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerMultiBlockChangePacket;
 import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.event.session.PacketReceivedEvent;
 import com.github.steveice10.packetlib.event.session.SessionAdapter;
@@ -20,12 +24,14 @@ public class BotPlayer extends SessionAdapter {
 	
 	private MinecraftProtocol protocol;
 	private Client client;
+	private BlockRegistry blockRegistry;
 	
 	private float health, saturation;
 	private int food;
 	
 	public BotPlayer(Account account) {
 		this.protocol = new MinecraftProtocol(new GameProfile(account.getUuid(), account.getUsername()), account.getClientToken(), account.getAccessToken());
+		this.blockRegistry = new BlockRegistry();
 	}
 	
 	public void connect(String ip, int port) {
@@ -47,6 +53,28 @@ public class BotPlayer extends SessionAdapter {
 			if(health <= 0) {
 				logger.info("{} died, respawning", protocol.getProfile().getName());
 				client.getSession().send(new ClientRequestPacket(ClientRequest.RESPAWN));
+			}
+			
+			return;
+		}
+		
+		if(event.getPacket() instanceof ServerChunkDataPacket) {
+			ServerChunkDataPacket packet = (ServerChunkDataPacket) event.getPacket();
+			blockRegistry.registerColumn(packet.getColumn());
+			
+			return;
+		}
+		
+		if(event.getPacket() instanceof ServerBlockChangePacket) {
+			ServerBlockChangePacket packet = (ServerBlockChangePacket) event.getPacket();
+			blockRegistry.processBlockChange(packet.getRecord());
+			return;
+		}
+		
+		if(event.getPacket() instanceof ServerMultiBlockChangePacket) {
+			ServerMultiBlockChangePacket packet = (ServerMultiBlockChangePacket) event.getPacket();
+			for(BlockChangeRecord record : packet.getRecords()) {
+				blockRegistry.processBlockChange(record);
 			}
 			
 			return;
