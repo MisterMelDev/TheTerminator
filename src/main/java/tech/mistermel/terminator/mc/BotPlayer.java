@@ -12,7 +12,6 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.Serv
 import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.event.session.PacketReceivedEvent;
 import com.github.steveice10.packetlib.event.session.SessionAdapter;
-import com.github.steveice10.packetlib.packet.Packet;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 
 public class BotPlayer extends SessionAdapter {
@@ -22,6 +21,9 @@ public class BotPlayer extends SessionAdapter {
 	
 	private MinecraftProtocol protocol;
 	private Client client;
+	
+	private float health, saturation;
+	private int food;
 	
 	public BotPlayer(Account account) {
 		try {
@@ -48,17 +50,31 @@ public class BotPlayer extends SessionAdapter {
 	
 	@Override
 	public void packetReceived(PacketReceivedEvent event) {
-		Packet packet = event.getPacket();
-		
-		if(packet instanceof ServerPlayerHealthPacket) {
-			float health = ((ServerPlayerHealthPacket) packet).getHealth();
-			logger.info("{} health is {}", protocol.getProfile().getName(), health);
+		if(event.getPacket() instanceof ServerPlayerHealthPacket) {
+			ServerPlayerHealthPacket packet = (ServerPlayerHealthPacket) event.getPacket();
+			this.health = packet.getHealth();
+			this.saturation = packet.getSaturation();
+			this.food = packet.getFood();
 			
 			if(health <= 0) {
 				logger.info("{} died, respawning", protocol.getProfile().getName());
 				client.getSession().send(new ClientRequestPacket(ClientRequest.RESPAWN));
 			}
+			
+			return;
 		}
+	}
+	
+	public float getHealth() {
+		return health;
+	}
+	
+	public float getSaturation() {
+		return saturation;
+	}
+	
+	public int getFood() {
+		return food;
 	}
 	
 	public void disconnect() {
