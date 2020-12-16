@@ -30,6 +30,12 @@ fetch("/accounts/list")
     });
   });
 
+const socket = new WebSocket("ws://" + window.location.hostname + (window.location.port ? ":" + window.location.port : ""));
+
 function onButtonClick(i) {
-  console.log(i);
+  let msg = {
+    type: "connect",
+    accountIndex: i
+  };
+  socket.send(JSON.stringify(msg));
 }

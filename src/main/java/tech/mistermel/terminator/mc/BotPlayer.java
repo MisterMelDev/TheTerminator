@@ -3,6 +3,7 @@ package tech.mistermel.terminator.mc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.steveice10.mc.auth.exception.request.InvalidCredentialsException;
 import com.github.steveice10.mc.auth.exception.request.RequestException;
 import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.packetlib.Client;
@@ -16,30 +17,27 @@ public class BotPlayer extends SessionAdapter {
 	
 	private MinecraftProtocol protocol;
 	private Client client;
-
-	public BotPlayer(String email, String password) {
-		try {
-			this.protocol = new MinecraftProtocol(email, password);
-			System.out.println("ClientToken: " + protocol.getClientToken());
-			System.out.println("AccessToken: " + protocol.getAccessToken());
-		} catch (RequestException e) {
-			logger.error("Error occurred while attempting to log in", e);
-		}
-	}
 	
 	public BotPlayer(Account account) {
 		try {
 			this.protocol = new MinecraftProtocol(account.getUsername(), account.getClientToken(), account.getAccessToken());
+		} catch(InvalidCredentialsException e) {
+			logger.warn("Unable to log in, credentials invalid");
 		} catch (RequestException e) {
 			logger.error("Error occurred while attempting to log in", e);
 		}
 	}
 	
 	public void connect(String ip, int port) {
-		this.client = new Client(ip, port, protocol, new TcpSessionFactory());
-		client.getSession().connect();
+		if(protocol == null) {
+			logger.warn("Cannot connect, login failed");
+			return;
+		}
 		
 		logger.info("Connecting {} ({}) to {}:{}", protocol.getProfile().getName(), protocol.getProfile().getIdAsString(), ip, port);
+		
+		this.client = new Client(ip, port, protocol, new TcpSessionFactory());
+		client.getSession().connect();
 	}
 	
 	public void disconnect() {

@@ -38,6 +38,9 @@ public class TheTerminator {
 		webServer.registerRoute("/accounts/list", new AccountsListRoute());
 		webServer.registerRoute("/accounts/add", new AccountsAddRoute());
 		
+		// TEMP
+		this.setServer("127.0.0.1", 25565);
+		
 		logger.info("Startup completed (took {}ms)", (System.currentTimeMillis() - Launcher.startupTime));
 	}
 	

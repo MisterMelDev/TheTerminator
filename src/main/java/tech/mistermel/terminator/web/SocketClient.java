@@ -2,6 +2,7 @@ package tech.mistermel.terminator.web;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +33,13 @@ public class SocketClient extends WebSocket {
 
 	@Override
 	protected void onMessage(WebSocketFrame message) {
-		logger.info("Message received: {}", message.getTextPayload());
+		JSONObject json = new JSONObject(message.getTextPayload());
+		String packetType = json.getString("type");
+		
+		if(packetType.equals("connect")) {
+			int accountIndex = json.getInt("accountIndex");
+			Launcher.instance.connectAccount(accountIndex);
+		}
 	}
 
 	@Override
