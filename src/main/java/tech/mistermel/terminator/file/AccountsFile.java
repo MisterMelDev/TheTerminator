@@ -2,6 +2,7 @@ package tech.mistermel.terminator.file;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,13 @@ public class AccountsFile extends FileProvider {
 			JSONObject json = accountsArray.getJSONObject(i);
 			result.add(new Account(json.getString("username"), UUID.fromString(json.getString("uuid")), json.getString("loginUsername"), json.getString("clientToken"), json.getString("accessToken")));
 		}
+		
+		Collections.sort(result, new Comparator<Account>() {
+			@Override
+			public int compare(Account o1, Account o2) {
+				return o1.getUsername().compareTo(o2.getUsername());
+			}
+		});
 		
 		logger.info("Loaded {} account(s) from accounts.json", result.size());
 		return result;
