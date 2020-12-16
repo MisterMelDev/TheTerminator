@@ -2,6 +2,8 @@ package tech.mistermel.terminator.web;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,8 @@ public class WebServer extends NanoWSD {
 	private static final int PORT = 8080;
 	private static final String INDEX_FILE = "/index.html";
 	
+	private Map<String, Route> routes = new HashMap<>();
+	
 	public WebServer() {
 		super(PORT);
 		
@@ -27,6 +31,10 @@ public class WebServer extends NanoWSD {
 		}
 	}
 	
+	public void registerRoute(String uri, Route route) {
+		routes.put(uri, route);
+	}
+	
 	@Override
 	protected Response serveHttp(IHTTPSession session) {
 		if(session.getUri().startsWith("."))
@@ -34,6 +42,11 @@ public class WebServer extends NanoWSD {
 		
 		String uri = session.getUri().equals("/") ? INDEX_FILE : session.getUri();
 		logger.debug("Received {} request for {}", session.getMethod().name(), uri);
+		
+		Route route = routes.get(uri);
+		if(route != null) {
+			return route.serve(session);
+		}
 		
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream("static" + uri);
 		if(in == null)
