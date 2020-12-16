@@ -21,16 +21,22 @@ public class Location {
 		this.pitch = pitch;
 	}
 	
-	public void add(double x, double y, double z) {
+	public Location add(double x, double y, double z) {
 		this.x += x;
 		this.y += y;
 		this.z += z;
+		return this;
 	}
 	
-	public void subtract(double x, double y, double z) {
+	public Location subtract(double x, double y, double z) {
 		this.x -= x;
 		this.y -= y;
 		this.z -= z;
+		return this;
+	}
+	
+	public Location clone() {
+		return new Location(x, y, z, yaw, pitch);
 	}
 	
 	public int getBlockX() {
