@@ -2,6 +2,8 @@ package tech.mistermel.terminator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ public class TheTerminator {
 	public void start() {
 		this.accountsFile = new AccountsFile();
 		this.accounts = accountsFile.loadAccounts();
+		this.sortAccounts();
 		
 		this.webServer = new WebServer();
 		webServer.registerRoute("/accounts/list", new AccountsListRoute());
@@ -56,9 +59,20 @@ public class TheTerminator {
 	
 	public void addAccount(Account account) {
 		accounts.add(account);
+		this.sortAccounts();
+		
 		accountsFile.saveAccount(account);
 		
 		logger.info("Account added (username: {}, uuid: {})", account.getUsername(), account.getUuid().toString());
+	}
+	
+	private void sortAccounts() {
+		Collections.sort(accounts, new Comparator<Account>() {
+			@Override
+			public int compare(Account o1, Account o2) {
+				return o1.getUsername().compareTo(o2.getUsername());
+			}
+		});
 	}
 	
 	public Account getAccount(UUID uuid) {
