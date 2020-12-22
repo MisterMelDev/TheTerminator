@@ -12,6 +12,7 @@ import com.github.steveice10.mc.protocol.data.game.world.block.BlockChangeRecord
 
 import tech.mistermel.terminator.Launcher;
 import tech.mistermel.terminator.Location;
+import tech.mistermel.terminator.util.BlockType;
 
 public class BlockRegistry {
 
@@ -22,6 +23,7 @@ public class BlockRegistry {
 	public void registerColumn(Column column) {
 		Column existingColumn = this.getColumn(column.getX(), column.getZ());
 		if(existingColumn != null) {
+			logger.info("Overwriting existing column (x: {}, z: {})", column.getX(), column.getZ());
 			columns.remove(existingColumn);
 		}
 		
@@ -38,13 +40,16 @@ public class BlockRegistry {
 		chunk.set(blockCoords[0], blockCoords[1], blockCoords[2], record.getBlock());
 	}
 	
-	public String getBlock(Location loc) {
+	public BlockType getBlock(Location loc) {
 		Chunk chunk = this.getChunk(loc);
-		if(chunk == null)
-			return null;
+		if(chunk == null) {
+			// If the column has loaded, but this chunk is null,
+			// the chunk is entirely air, so we just return AIR.
+			return Launcher.instance.getBlockStateRegistry().getAirType();
+		}
 		
 		int[] blockCoords = this.toChunkBlockCoords(loc);
-		return Launcher.instance.getBlockStateRegistry().getBlock(chunk.get(blockCoords[0], blockCoords[1], blockCoords[2]));
+		return Launcher.instance.getBlockStateRegistry().getBlockType(chunk.get(blockCoords[0], blockCoords[1], blockCoords[2]));
 	}
 	
 	public Chunk getChunk(Location loc) {

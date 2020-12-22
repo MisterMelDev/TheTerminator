@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import tech.mistermel.terminator.file.AccountsFile;
 import tech.mistermel.terminator.mc.Account;
 import tech.mistermel.terminator.mc.BotPlayer;
-import tech.mistermel.terminator.util.BlockStateRegistry;
+import tech.mistermel.terminator.util.BlockTypeRegistry;
 import tech.mistermel.terminator.web.WebServer;
 import tech.mistermel.terminator.web.route.AccountsAddRoute;
 import tech.mistermel.terminator.web.route.AccountsListRoute;
@@ -26,7 +26,7 @@ public class TheTerminator {
 	
 	private WebServer webServer;
 	private AccountsFile accountsFile;
-	private BlockStateRegistry blockStateRegistry;
+	private BlockTypeRegistry blockStateRegistry;
 	
 	private String ip;
 	private int port;
@@ -35,7 +35,7 @@ public class TheTerminator {
 	private Map<Account, BotPlayer> players = new HashMap<>();
 	
 	public void start() {
-		this.blockStateRegistry = new BlockStateRegistry();
+		this.blockStateRegistry = new BlockTypeRegistry();
 		blockStateRegistry.load();
 		
 		this.accountsFile = new AccountsFile();
@@ -121,7 +121,7 @@ public class TheTerminator {
 		return webServer;
 	}
 	
-	public BlockStateRegistry getBlockStateRegistry() {
+	public BlockTypeRegistry getBlockStateRegistry() {
 		return blockStateRegistry;
 	}
 	
