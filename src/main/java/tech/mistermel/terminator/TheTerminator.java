@@ -17,6 +17,7 @@ import tech.mistermel.terminator.map.MapHandler;
 import tech.mistermel.terminator.mc.Account;
 import tech.mistermel.terminator.mc.BotPlayer;
 import tech.mistermel.terminator.util.BlockTypeRegistry;
+import tech.mistermel.terminator.util.TextureRegistry;
 import tech.mistermel.terminator.web.WebServer;
 import tech.mistermel.terminator.web.route.AccountsAddRoute;
 import tech.mistermel.terminator.web.route.AccountsListRoute;
@@ -29,6 +30,7 @@ public class TheTerminator {
 	private WebServer webServer;
 	private AccountsFile accountsFile;
 	private BlockTypeRegistry blockStateRegistry;
+	private TextureRegistry textureRegistry;
 	private MapHandler mapHandler;
 	
 	private String ip;
@@ -44,6 +46,9 @@ public class TheTerminator {
 		this.accountsFile = new AccountsFile();
 		this.accounts = accountsFile.loadAccounts();
 		this.sortAccounts();
+		
+		this.textureRegistry = new TextureRegistry();
+		textureRegistry.loadTextures();
 		
 		this.mapHandler = new MapHandler();
 		
@@ -137,6 +142,10 @@ public class TheTerminator {
 	
 	public MapHandler getMapHandler() {
 		return mapHandler;
+	}
+	
+	public TextureRegistry getTextureRegistry() {
+		return textureRegistry;
 	}
 	
 }

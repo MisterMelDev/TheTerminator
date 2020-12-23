@@ -1,6 +1,11 @@
 package tech.mistermel.terminator.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class BlockType {
+	
+	private List<String> notSolid = Arrays.asList("minecraft:air", "minecraft:cave_air", "minecraft:grass", "minecraft:tall_grass", "minecraft:oxeye_daisy", "minecraft:dandelion", "minecraft:poppy", "minecraft:sugar_cane");
 	
 	private int id;
 	private String name, friendlyName;
@@ -13,7 +18,7 @@ public class BlockType {
 		this.friendlyName = friendlyName;
 		this.isSolid = isSolid;
 		
-		if(!name.equals("minecraft:air"))
+		if(!notSolid.contains(name))
 			this.isSolid = true;
 	}
 	
@@ -23,6 +28,10 @@ public class BlockType {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getNameWithoutNamespace() {
+		return name.substring(name.indexOf(':') + 1);
 	}
 	
 	public String getFriendlyName() {

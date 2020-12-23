@@ -4,16 +4,13 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.steveice10.mc.protocol.data.game.chunk.Column;
 
+import tech.mistermel.terminator.Launcher;
 import tech.mistermel.terminator.mc.BlockRegistry;
 import tech.mistermel.terminator.mc.BotPlayer;
 import tech.mistermel.terminator.util.BlockType;
@@ -70,33 +67,29 @@ public class MapHandler {
 				
 				BlockType type = BlockRegistry.getHighestBlock(column, chunkX, chunkZ);
 				
-				URL url = this.getTexture(type);
-				if(url == null) {
+				BufferedImage textureImg = this.getTexture(type);
+				if(textureImg == null) {
 					logger.warn("Could not find texture for block type {}", type.getName());
 					continue;
 				}
 				
-				try {
-					g2d.drawImage(ImageIO.read(url), blockX, blockY, null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				g2d.drawImage(textureImg, blockX, blockY, null);
 			}
 		}
 	}
 	
-	private URL getTexture(BlockType type) {
+	private BufferedImage getTexture(BlockType type) {
 		String name = type.getNameWithoutNamespace();
 		
-		URL url = this.getTexture(name);
-		if(url != null)
-			return url;
+		BufferedImage img = this.getTexture(name);
+		if(img != null)
+			return img;
 		
 		return this.getTexture(name + "_top");
 	}
 	
-	private URL getTexture(String name) {
-		return this.getClass().getClassLoader().getResource("mc-data/textures/block/" + name + ".png");
+	private BufferedImage getTexture(String name) {
+		return Launcher.instance.getTextureRegistry().getTexture("textures/block/" + name + ".png");
 	}
 	
 }
