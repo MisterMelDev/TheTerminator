@@ -13,12 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tech.mistermel.terminator.file.AccountsFile;
+import tech.mistermel.terminator.map.MapHandler;
 import tech.mistermel.terminator.mc.Account;
 import tech.mistermel.terminator.mc.BotPlayer;
 import tech.mistermel.terminator.util.BlockTypeRegistry;
 import tech.mistermel.terminator.web.WebServer;
 import tech.mistermel.terminator.web.route.AccountsAddRoute;
 import tech.mistermel.terminator.web.route.AccountsListRoute;
+import tech.mistermel.terminator.web.route.MapRoute;
 
 public class TheTerminator {
 
@@ -27,6 +29,7 @@ public class TheTerminator {
 	private WebServer webServer;
 	private AccountsFile accountsFile;
 	private BlockTypeRegistry blockStateRegistry;
+	private MapHandler mapHandler;
 	
 	private String ip;
 	private int port;
@@ -42,9 +45,12 @@ public class TheTerminator {
 		this.accounts = accountsFile.loadAccounts();
 		this.sortAccounts();
 		
+		this.mapHandler = new MapHandler();
+		
 		this.webServer = new WebServer();
 		webServer.registerRoute("/accounts/list", new AccountsListRoute());
 		webServer.registerRoute("/accounts/add", new AccountsAddRoute());
+		webServer.registerRoute("/map", new MapRoute());
 		
 		// TEMP
 		this.setServer("127.0.0.1", 25565);
@@ -109,6 +115,10 @@ public class TheTerminator {
 		player.connect(ip, port);
 	}
 	
+	public BotPlayer getPlayer(Account account) {
+		return players.get(account);
+	}
+	
 	public Collection<BotPlayer> getPlayers() {
 		return players.values();
 	}
@@ -123,6 +133,10 @@ public class TheTerminator {
 	
 	public BlockTypeRegistry getBlockStateRegistry() {
 		return blockStateRegistry;
+	}
+	
+	public MapHandler getMapHandler() {
+		return mapHandler;
 	}
 	
 }

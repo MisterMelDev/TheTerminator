@@ -1,4 +1,4 @@
-package tech.mistermel.terminator;
+package tech.mistermel.terminator.util;
 
 import com.github.steveice10.mc.protocol.data.game.entity.metadata.Position;
 
@@ -49,6 +49,24 @@ public class Location {
 	
 	public int getBlockZ() {
 		return (int) Math.floor(z);
+	}
+	
+	public int[] toChunkCoords() {
+		int chunkX = this.getBlockX() >> 4;
+		int chunkY = this.getBlockY() >> 4;
+		int chunkZ = this.getBlockZ() >> 4;
+		
+		return new int[] { chunkX, chunkY, chunkZ };
+	}
+	
+	public int[] toChunkBlockCoords() {
+		int blockX = (int) Math.floor(x % 16);
+		int blockY = (int) Math.floor(y % 16);
+		int blockZ = (int) Math.floor(z % 16);
+		if(blockX < 0) blockX += 16;
+		if(blockZ < 0) blockZ += 16;
+		
+		return new int[] { blockX, blockY, blockZ };
 	}
 	
 	public double getX() {

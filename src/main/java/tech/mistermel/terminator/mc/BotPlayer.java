@@ -1,11 +1,14 @@
 package tech.mistermel.terminator.mc;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.steveice10.mc.auth.data.GameProfile;
 import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.mc.protocol.data.game.ClientRequest;
+import com.github.steveice10.mc.protocol.data.game.chunk.Column;
 import com.github.steveice10.mc.protocol.data.game.world.block.BlockChangeRecord;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientChatPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientRequestPacket;
@@ -21,8 +24,8 @@ import com.github.steveice10.packetlib.event.session.PacketReceivedEvent;
 import com.github.steveice10.packetlib.event.session.SessionAdapter;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 
-import tech.mistermel.terminator.Location;
 import tech.mistermel.terminator.util.BlockType;
+import tech.mistermel.terminator.util.Location;
 
 public class BotPlayer extends SessionAdapter {
 
@@ -156,6 +159,10 @@ public class BotPlayer extends SessionAdapter {
 		return blockRegistry.getBlock(loc);
 	}
 	
+	public Column getColumn(int chunkX, int chunkZ) {
+		return blockRegistry.getColumn(chunkX, chunkZ);
+	}
+	
 	public void sendMessage(String msg) {
 		client.getSession().send(new ClientChatPacket(msg));
 	}
@@ -174,6 +181,10 @@ public class BotPlayer extends SessionAdapter {
 	
 	public String getUsername() {
 		return protocol.getProfile().getName();
+	}
+	
+	public UUID getUUID() {
+		return protocol.getProfile().getId();
 	}
 	
 	public Location getLocation() {

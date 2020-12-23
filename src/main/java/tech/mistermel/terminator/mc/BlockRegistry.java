@@ -11,8 +11,8 @@ import com.github.steveice10.mc.protocol.data.game.chunk.Column;
 import com.github.steveice10.mc.protocol.data.game.world.block.BlockChangeRecord;
 
 import tech.mistermel.terminator.Launcher;
-import tech.mistermel.terminator.Location;
 import tech.mistermel.terminator.util.BlockType;
+import tech.mistermel.terminator.util.Location;
 
 public class BlockRegistry {
 
@@ -36,7 +36,7 @@ public class BlockRegistry {
 		if(chunk == null)
 			return;
 		
-		int[] blockCoords = this.toChunkBlockCoords(loc);
+		int[] blockCoords = loc.toChunkBlockCoords();
 		chunk.set(blockCoords[0], blockCoords[1], blockCoords[2], record.getBlock());
 	}
 	
@@ -48,12 +48,12 @@ public class BlockRegistry {
 			return Launcher.instance.getBlockStateRegistry().getAirType();
 		}
 		
-		int[] blockCoords = this.toChunkBlockCoords(loc);
+		int[] blockCoords = loc.toChunkBlockCoords();
 		return Launcher.instance.getBlockStateRegistry().getBlockType(chunk.get(blockCoords[0], blockCoords[1], blockCoords[2]));
 	}
 	
 	public Chunk getChunk(Location loc) {
-		int[] chunkCoords = this.toChunkCoords(loc);
+		int[] chunkCoords = loc.toChunkCoords();
 		Column column = this.getColumn(chunkCoords[0], chunkCoords[2]);
 		if(column == null) {
 			logger.warn("Column x={} z={} has not loaded yet", chunkCoords[0], chunkCoords[2]);
@@ -63,29 +63,27 @@ public class BlockRegistry {
 		return column.getChunks()[chunkCoords[1]];
 	}
 	
-	private int[] toChunkCoords(Location loc) {
-		int chunkX = loc.getBlockX() >> 4;
-		int chunkY = loc.getBlockY() >> 4;
-		int chunkZ = loc.getBlockZ() >> 4;
-		
-		return new int[] { chunkX, chunkY, chunkZ };
-	}
-	
-	private int[] toChunkBlockCoords(Location loc) {
-		int blockX = (int) Math.floor(loc.getX() % 16);
-		int blockY = (int) Math.floor(loc.getY() % 16);
-		int blockZ = (int) Math.floor(loc.getZ() % 16);
-		if(blockX < 0) blockX += 16;
-		if(blockZ < 0) blockZ += 16;
-		
-		return new int[] { blockX, blockY, blockZ };
-	}
-	
 	// This is absolutely horrible, need to fix the O(n) performance
 	public Column getColumn(int columnX, int columnZ) {
 		for(Column column : columns) {
 			if(column.getX() == columnX && column.getZ() == columnZ)
 				return column;
+		}
+		
+		return null;
+	}
+	
+	public static BlockType getHighestBlock(Column column, int chunkBlockX, int chunkBlockZ) {
+		for(int i = column.getChunks().length - 1; i >= 0; i--) {
+			Chunk chunk = column.getChunks()[i];
+			if(chunk == null)
+				continue;
+			
+			for(int y = 15; y >= 0; y--) {
+				BlockType type = Launcher.instance.getBlockStateRegistry().getBlockType(chunk.get(chunkBlockX, y, chunkBlockZ));
+				if(type != null && type.isSolid())
+					return type;
+			}
 		}
 		
 		return null;

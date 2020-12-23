@@ -52,7 +52,12 @@ public class WebServer extends NanoWSD {
 		
 		Route route = routes.get(uri);
 		if(route != null) {
-			return route.serve(session);
+			try {
+				return route.serve(session);
+			} catch(Exception e) {
+				logger.error("Error occurred while attempting to serve route", e);
+				return newFixedLengthResponse(Response.Status.INTERNAL_ERROR, "text/plain", e.getMessage());
+			}
 		}
 		
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream("static" + uri);
