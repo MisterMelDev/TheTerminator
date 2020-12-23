@@ -1,395 +1,395 @@
 {
-	"ocean": {
+	"minecraft:ocean": {
 		"id": 0,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"plains": {
+	"minecraft:plains": {
 		"id": 1,
 		"temperature": 0.8,
 		"downfall": 0.4
 	},
-	"desert": {
+	"minecraft:desert": {
 		"id": 2,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"mountains": {
+	"minecraft:mountains": {
 		"id": 3,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"forest": {
+	"minecraft:forest": {
 		"id": 4,
 		"temperature": 0.7,
 		"downfall": 0.8
 	},
-	"taiga": {
+	"minecraft:taiga": {
 		"id": 5,
 		"temperature": 0.25,
 		"downfall": 0.8
 	},
-	"swamp": {
+	"minecraft:swamp": {
 		"id": 6,
 		"temperature": 0.8,
 		"downfall": 0.9
 	},
-	"river": {
+	"minecraft:river": {
 		"id": 7,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"nether_wastes": {
+	"minecraft:nether_wastes": {
 		"id": 8,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"the_end": {
+	"minecraft:the_end": {
 		"id": 9,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"frozen_ocean": {
+	"minecraft:frozen_ocean": {
 		"id": 10,
 		"temperature": 0.0,
 		"downfall": 0.5
 	},
-	"frozen_river": {
+	"minecraft:frozen_river": {
 		"id": 11,
 		"temperature": 0.0,
 		"downfall": 0.5
 	},
-	"snowy_tundra": {
+	"minecraft:snowy_tundra": {
 		"id": 12,
 		"temperature": 0.0,
 		"downfall": 0.5
 	},
-	"snowy_mountains": {
+	"minecraft:snowy_mountains": {
 		"id": 13,
 		"temperature": 0.0,
 		"downfall": 0.5
 	},
-	"mushroom_fields": {
+	"minecraft:mushroom_fields": {
 		"id": 14,
 		"temperature": 0.9,
 		"downfall": 1.0
 	},
-	"mushroom_field_shore": {
+	"minecraft:mushroom_field_shore": {
 		"id": 15,
 		"temperature": 0.9,
 		"downfall": 1.0
 	},
-	"beach": {
+	"minecraft:beach": {
 		"id": 16,
 		"temperature": 0.8,
 		"downfall": 0.4
 	},
-	"desert_hills": {
+	"minecraft:desert_hills": {
 		"id": 17,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"wooded_hills": {
+	"minecraft:wooded_hills": {
 		"id": 18,
 		"temperature": 0.7,
 		"downfall": 0.8
 	},
-	"taiga_hills": {
+	"minecraft:taiga_hills": {
 		"id": 19,
 		"temperature": 0.25,
 		"downfall": 0.8
 	},
-	"mountain_edge": {
+	"minecraft:mountain_edge": {
 		"id": 20,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"jungle": {
+	"minecraft:jungle": {
 		"id": 21,
 		"temperature": 0.95,
 		"downfall": 0.9
 	},
-	"jungle_hills": {
+	"minecraft:jungle_hills": {
 		"id": 22,
 		"temperature": 0.95,
 		"downfall": 0.9
 	},
-	"jungle_edge": {
+	"minecraft:jungle_edge": {
 		"id": 23,
 		"temperature": 0.95,
 		"downfall": 0.8
 	},
-	"deep_ocean": {
+	"minecraft:deep_ocean": {
 		"id": 24,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"stone_shore": {
+	"minecraft:stone_shore": {
 		"id": 25,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"snowy_beach": {
+	"minecraft:snowy_beach": {
 		"id": 26,
 		"temperature": 0.05,
 		"downfall": 0.3
 	},
-	"birch_forest": {
+	"minecraft:birch_forest": {
 		"id": 27,
 		"temperature": 0.6,
 		"downfall": 0.6
 	},
-	"birch_forest_hills": {
+	"minecraft:birch_forest_hills": {
 		"id": 28,
 		"temperature": 0.6,
 		"downfall": 0.6
 	},
-	"dark_forest": {
+	"minecraft:dark_forest": {
 		"id": 29,
 		"temperature": 0.7,
 		"downfall": 0.8
 	},
-	"snowy_taiga": {
+	"minecraft:snowy_taiga": {
 		"id": 30,
 		"temperature": -0.5,
 		"downfall": 0.4
 	},
-	"snowy_taiga_hills": {
+	"minecraft:snowy_taiga_hills": {
 		"id": 31,
 		"temperature": -0.5,
 		"downfall": 0.4
 	},
-	"giant_tree_taiga": {
+	"minecraft:giant_tree_taiga": {
 		"id": 32,
 		"temperature": 0.3,
 		"downfall": 0.8
 	},
-	"giant_tree_taiga_hills": {
+	"minecraft:giant_tree_taiga_hills": {
 		"id": 33,
 		"temperature": 0.3,
 		"downfall": 0.8
 	},
-	"wooded_mountains": {
+	"minecraft:wooded_mountains": {
 		"id": 34,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"savanna": {
+	"minecraft:savanna": {
 		"id": 35,
 		"temperature": 1.2,
 		"downfall": 0.0
 	},
-	"savanna_plateau": {
+	"minecraft:savanna_plateau": {
 		"id": 36,
 		"temperature": 1.0,
 		"downfall": 0.0
 	},
-	"badlands": {
+	"minecraft:badlands": {
 		"id": 37,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"wooded_badlands_plateau": {
+	"minecraft:wooded_badlands_plateau": {
 		"id": 38,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"badlands_plateau": {
+	"minecraft:badlands_plateau": {
 		"id": 39,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"small_end_islands": {
+	"minecraft:small_end_islands": {
 		"id": 40,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"end_midlands": {
+	"minecraft:end_midlands": {
 		"id": 41,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"end_highlands": {
+	"minecraft:end_highlands": {
 		"id": 42,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"end_barrens": {
+	"minecraft:end_barrens": {
 		"id": 43,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"warm_ocean": {
+	"minecraft:warm_ocean": {
 		"id": 44,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"lukewarm_ocean": {
+	"minecraft:lukewarm_ocean": {
 		"id": 45,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"cold_ocean": {
+	"minecraft:cold_ocean": {
 		"id": 46,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"deep_warm_ocean": {
+	"minecraft:deep_warm_ocean": {
 		"id": 47,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"deep_lukewarm_ocean": {
+	"minecraft:deep_lukewarm_ocean": {
 		"id": 48,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"deep_cold_ocean": {
+	"minecraft:deep_cold_ocean": {
 		"id": 49,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"deep_frozen_ocean": {
+	"minecraft:deep_frozen_ocean": {
 		"id": 50,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"the_void": {
+	"minecraft:the_void": {
 		"id": 127,
 		"temperature": 0.5,
 		"downfall": 0.5
 	},
-	"sunflower_plains": {
+	"minecraft:sunflower_plains": {
 		"id": 129,
 		"temperature": 0.8,
 		"downfall": 0.4
 	},
-	"desert_lakes": {
+	"minecraft:desert_lakes": {
 		"id": 130,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"gravelly_mountains": {
+	"minecraft:gravelly_mountains": {
 		"id": 131,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"flower_forest": {
+	"minecraft:flower_forest": {
 		"id": 132,
 		"temperature": 0.7,
 		"downfall": 0.8
 	},
-	"taiga_mountains": {
+	"minecraft:taiga_mountains": {
 		"id": 133,
 		"temperature": 0.25,
 		"downfall": 0.8
 	},
-	"swamp_hills": {
+	"minecraft:swamp_hills": {
 		"id": 134,
 		"temperature": 0.8,
 		"downfall": 0.9
 	},
-	"ice_spikes": {
+	"minecraft:ice_spikes": {
 		"id": 140,
 		"temperature": 0.0,
 		"downfall": 0.5
 	},
-	"modified_jungle": {
+	"minecraft:modified_jungle": {
 		"id": 149,
 		"temperature": 0.95,
 		"downfall": 0.9
 	},
-	"modified_jungle_edge": {
+	"minecraft:modified_jungle_edge": {
 		"id": 151,
 		"temperature": 0.95,
 		"downfall": 0.8
 	},
-	"tall_birch_forest": {
+	"minecraft:tall_birch_forest": {
 		"id": 155,
 		"temperature": 0.6,
 		"downfall": 0.6
 	},
-	"tall_birch_hills": {
+	"minecraft:tall_birch_hills": {
 		"id": 156,
 		"temperature": 0.6,
 		"downfall": 0.6
 	},
-	"dark_forest_hills": {
+	"minecraft:dark_forest_hills": {
 		"id": 157,
 		"temperature": 0.7,
 		"downfall": 0.8
 	},
-	"snowy_taiga_mountains": {
+	"minecraft:snowy_taiga_mountains": {
 		"id": 158,
 		"temperature": -0.5,
 		"downfall": 0.4
 	},
-	"giant_spruce_taiga": {
+	"minecraft:giant_spruce_taiga": {
 		"id": 160,
 		"temperature": 0.25,
 		"downfall": 0.8
 	},
-	"giant_spruce_taiga_hills": {
+	"minecraft:giant_spruce_taiga_hills": {
 		"id": 161,
 		"temperature": 0.25,
 		"downfall": 0.8
 	},
-	"modified_gravelly_mountains": {
+	"minecraft:modified_gravelly_mountains": {
 		"id": 162,
 		"temperature": 0.2,
 		"downfall": 0.3
 	},
-	"shattered_savanna": {
+	"minecraft:shattered_savanna": {
 		"id": 163,
 		"temperature": 1.1,
 		"downfall": 0.0
 	},
-	"shattered_savanna_plateau": {
+	"minecraft:shattered_savanna_plateau": {
 		"id": 164,
 		"temperature": 1.0,
 		"downfall": 0.0
 	},
-	"eroded_badlands": {
+	"minecraft:eroded_badlands": {
 		"id": 165,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"modified_wooded_badlands_plateau": {
+	"minecraft:modified_wooded_badlands_plateau": {
 		"id": 166,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"modified_badlands_plateau": {
+	"minecraft:modified_badlands_plateau": {
 		"id": 167,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"bamboo_jungle": {
+	"minecraft:bamboo_jungle": {
 		"id": 168,
 		"temperature": 0.95,
 		"downfall": 0.9
 	},
-	"bamboo_jungle_hills": {
+	"minecraft:bamboo_jungle_hills": {
 		"id": 169,
 		"temperature": 0.95,
 		"downfall": 0.9
 	},
-	"soul_sand_valley": {
+	"minecraft:soul_sand_valley": {
 		"id": 170,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"crimson_forest": {
+	"minecraft:rimson_forest": {
 		"id": 171,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"warped_forest": {
+	"minecraft:warped_forest": {
 		"id": 172,
 		"temperature": 2.0,
 		"downfall": 0.0
 	},
-	"basalt_deltas": {
+	"minecraft:basalt_deltas": {
 		"id": 173,
 		"temperature": 2.0,
 		"downfall": 0.0

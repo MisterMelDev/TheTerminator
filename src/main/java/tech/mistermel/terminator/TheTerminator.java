@@ -16,6 +16,7 @@ import tech.mistermel.terminator.file.AccountsFile;
 import tech.mistermel.terminator.map.MapHandler;
 import tech.mistermel.terminator.mc.Account;
 import tech.mistermel.terminator.mc.BotPlayer;
+import tech.mistermel.terminator.util.BiomeRegistry;
 import tech.mistermel.terminator.util.BlockTypeRegistry;
 import tech.mistermel.terminator.util.TextureRegistry;
 import tech.mistermel.terminator.web.WebServer;
@@ -28,10 +29,12 @@ public class TheTerminator {
 	private static final Logger logger = LoggerFactory.getLogger(TheTerminator.class);
 	
 	private WebServer webServer;
+	private MapHandler mapHandler;
 	private AccountsFile accountsFile;
+	
 	private BlockTypeRegistry blockStateRegistry;
 	private TextureRegistry textureRegistry;
-	private MapHandler mapHandler;
+	private BiomeRegistry biomeRegistry;
 	
 	private String ip;
 	private int port;
@@ -42,6 +45,9 @@ public class TheTerminator {
 	public void start() {
 		this.blockStateRegistry = new BlockTypeRegistry();
 		blockStateRegistry.load();
+		
+		this.biomeRegistry = new BiomeRegistry();
+		biomeRegistry.load();
 		
 		this.accountsFile = new AccountsFile();
 		this.accounts = accountsFile.loadAccounts();
@@ -146,6 +152,10 @@ public class TheTerminator {
 	
 	public TextureRegistry getTextureRegistry() {
 		return textureRegistry;
+	}
+	
+	public BiomeRegistry getBiomeRegistry() {
+		return biomeRegistry;
 	}
 	
 }

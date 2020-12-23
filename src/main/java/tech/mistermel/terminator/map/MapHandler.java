@@ -13,6 +13,7 @@ import com.github.steveice10.mc.protocol.data.game.chunk.Column;
 import tech.mistermel.terminator.Launcher;
 import tech.mistermel.terminator.mc.BlockRegistry;
 import tech.mistermel.terminator.mc.BotPlayer;
+import tech.mistermel.terminator.util.BiomeRegistry.Biome;
 import tech.mistermel.terminator.util.BlockType;
 import tech.mistermel.terminator.util.Location;
 
@@ -58,6 +59,9 @@ public class MapHandler {
 			g2d.fillRect(x, y, 256, 256);
 			return;
 		}
+		
+		Biome biome = Launcher.instance.getBiomeRegistry().getBiome(column.getBiomeData()[0]);
+		System.out.println(biome.getName() + " " + biome.getFriendlyName());
 		
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 		for(int chunkX = 0; chunkX < 16; chunkX++) {

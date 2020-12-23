@@ -64,7 +64,7 @@ public class BlockTypeRegistry {
 	private String readFile(String name) {
 		InputStream in = this.getClass().getClassLoader().getResourceAsStream("mc-data/" + name);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		return  reader.lines().collect(Collectors.joining());
+		return reader.lines().collect(Collectors.joining());
 	}
 	
 	public String getTranslation(String id) {
