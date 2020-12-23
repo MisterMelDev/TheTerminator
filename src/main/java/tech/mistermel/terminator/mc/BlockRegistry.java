@@ -73,7 +73,7 @@ public class BlockRegistry {
 		return null;
 	}
 	
-	public static BlockType getHighestBlock(Column column, int chunkBlockX, int chunkBlockZ) {
+	public static Block getHighestBlock(Column column, int chunkBlockX, int chunkBlockZ) {
 		for(int i = column.getChunks().length - 1; i >= 0; i--) {
 			Chunk chunk = column.getChunks()[i];
 			if(chunk == null)
@@ -82,11 +82,29 @@ public class BlockRegistry {
 			for(int y = 15; y >= 0; y--) {
 				BlockType type = Launcher.instance.getBlockStateRegistry().getBlockType(chunk.get(chunkBlockX, y, chunkBlockZ));
 				if(type != null && type.isSolid())
-					return type;
+					return new Block(new Location(0, (i * 16) + y, 0), type);
 			}
 		}
 		
 		return null;
+	}
+	
+	public static class Block {
+		private Location loc;
+		private BlockType type;
+		
+		public Block(Location loc, BlockType type) {
+			this.loc = loc;
+			this.type = type;
+		}
+		
+		public Location getLocation() {
+			return loc;
+		}
+		
+		public BlockType getType() {
+			return type;
+		}
 	}
 	
 }

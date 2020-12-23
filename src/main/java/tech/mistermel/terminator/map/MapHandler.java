@@ -12,6 +12,7 @@ import com.github.steveice10.mc.protocol.data.game.chunk.Column;
 
 import tech.mistermel.terminator.Launcher;
 import tech.mistermel.terminator.mc.BlockRegistry;
+import tech.mistermel.terminator.mc.BlockRegistry.Block;
 import tech.mistermel.terminator.mc.BotPlayer;
 import tech.mistermel.terminator.util.BiomeRegistry.Biome;
 import tech.mistermel.terminator.util.BlockType;
@@ -61,7 +62,12 @@ public class MapHandler {
 		}
 		
 		Biome biome = Launcher.instance.getBiomeRegistry().getBiome(column.getBiomeData()[0]);
-		System.out.println(biome.getName() + " " + biome.getFriendlyName());
+		
+		/*BufferedImage colorMapImg = Launcher.instance.getTextureRegistry().getTexture("textures/colormap/grass.png");
+		float adjTemp = clamp(biome.getTemperature(), 0.0f, 1.0f);
+		float adjRainfall = clamp(biome.getRainfall(), 0.0f, 1.0f) * adjTemp;
+		
+		Color grassColor = new Color(colorMapImg.getRGB((int) (adjTemp * colorMapImg.getWidth()), (int) (adjRainfall * colorMapImg.getHeight())));*/
 		
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
 		for(int chunkX = 0; chunkX < 16; chunkX++) {
@@ -69,12 +75,25 @@ public class MapHandler {
 				int blockX = x + chunkX * 16;
 				int blockY = y + chunkZ * 16;
 				
-				BlockType type = BlockRegistry.getHighestBlock(column, chunkX, chunkZ);
+				Block block = BlockRegistry.getHighestBlock(column, chunkX, chunkZ);
 				
-				BufferedImage textureImg = this.getTexture(type);
+				BufferedImage textureImg = this.getTexture(block.getType());
 				if(textureImg == null) {
-					logger.warn("Could not find texture for block type {}", type.getName());
+					logger.warn("Could not find texture for block type {}", block.getType().getName());
 					continue;
+				}
+				
+				if(textureImg.getHeight() > 16)
+					textureImg = textureImg.getSubimage(0, 0, 16, 16);
+				
+				if(block.getType().getName().equals("minecraft:grass_block")) {
+					Color grassColor = this.getColorMapColor("grass", biome, block.getLocation().getBlockY());
+					textureImg = this.applyColor(textureImg, grassColor);
+				}
+				
+				if(block.getType().getName().equals("minecraft:oak_leaves")) {
+					Color foliageColor = this.getColorMapColor("foliage", biome, block.getLocation().getBlockY());
+					textureImg = this.applyColor(textureImg, foliageColor);
 				}
 				
 				g2d.drawImage(textureImg, blockX, blockY, null);
@@ -82,8 +101,55 @@ public class MapHandler {
 		}
 	}
 	
+	private Color getColorMapColor(String colorMap, Biome biome, int height) {
+		int seaLevel = 62;
+		int elevation = Math.max(0, height - seaLevel);
+		
+		BufferedImage img = Launcher.instance.getTextureRegistry().getTexture("textures/colormap/" + colorMap + ".png");
+		float adjTemp = clamp(biome.getTemperature() - (float) elevation * 0.166667f, 0.0f, 1.0f);
+		float adjRainfall = clamp(biome.getRainfall(), 0.0f, 1.0f) * adjTemp;
+		
+		int x = (int) (img.getWidth() * adjRainfall);
+		int y = (int) (img.getHeight() * adjTemp);
+		
+		return new Color(img.getRGB(x, y));
+	}
+	
+	private BufferedImage applyColor(BufferedImage imgIn, Color color) {
+		BufferedImage img = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType());
+		
+		for(int x = 0; x < img.getWidth(); x++) {
+			for(int y = 0; y < img.getHeight(); y++) {
+				Color pixelColor = new Color(imgIn.getRGB(x, y));
+				img.setRGB(x, y, mixColors(pixelColor, color).getRGB());
+			}
+		}
+		
+		return img;
+	}
+	
+	private Color mixColors(Color color1, Color color2) {
+		float ratio = 0.5f;
+		int r = (int) ((color1.getRed() * ratio) + (color2.getRed() * ratio));
+		int g = (int) ((color1.getGreen() * ratio) + (color2.getGreen() * ratio));
+		int b = (int) ((color1.getBlue() * ratio) + (color2.getBlue() * ratio));
+		
+		return new Color(r, g, b);
+	}
+	
+	private float clamp(float value, float min, float max) {
+		if(value > max)
+			return max;
+		if(value < min)
+			return min;
+		return value;
+	}
+	
 	private BufferedImage getTexture(BlockType type) {
 		String name = type.getNameWithoutNamespace();
+		
+		if(name.equals("water"))
+			return this.getTexture("water_still");
 		
 		BufferedImage img = this.getTexture(name);
 		if(img != null)

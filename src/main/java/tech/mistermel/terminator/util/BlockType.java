@@ -5,7 +5,8 @@ import java.util.List;
 
 public class BlockType {
 	
-	private List<String> notSolid = Arrays.asList("minecraft:air", "minecraft:cave_air", "minecraft:grass", "minecraft:tall_grass", "minecraft:oxeye_daisy", "minecraft:dandelion", "minecraft:poppy", "minecraft:sugar_cane");
+	private List<String> notSolid = Arrays.asList("minecraft:air", "minecraft:cave_air", "minecraft:grass", "minecraft:tall_grass", "minecraft:seagrass", "minecraft:tall_seagrass", "minecraft:kelp",
+			"minecraft:oxeye_daisy", "minecraft:dandelion", "minecraft:poppy", "minecraft:sugar_cane");
 	
 	private int id;
 	private String name, friendlyName;
