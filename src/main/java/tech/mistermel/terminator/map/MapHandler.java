@@ -21,7 +21,7 @@ import tech.mistermel.terminator.util.Location;
 public class MapHandler {
 
 	private static Logger logger = LoggerFactory.getLogger(MapHandler.class);
-	private static int SIZE = 768;
+	private static int SIZE = 768, WATER_COLOR = 4159204;
 	
 	public BufferedImage createImage(BotPlayer player, boolean showPlayer) {
 		BufferedImage img = new BufferedImage(SIZE, SIZE, BufferedImage.TYPE_INT_RGB);
@@ -94,6 +94,10 @@ public class MapHandler {
 				if(block.getType().getName().equals("minecraft:oak_leaves")) {
 					Color foliageColor = this.getColorMapColor("foliage", biome, block.getLocation().getBlockY());
 					textureImg = this.applyColor(textureImg, foliageColor);
+				}
+				
+				if(block.getType().getName().equals("minecraft:water")) {
+					textureImg = this.applyColor(textureImg, new Color(WATER_COLOR));
 				}
 				
 				g2d.drawImage(textureImg, blockX, blockY, null);
